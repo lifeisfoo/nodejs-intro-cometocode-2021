@@ -43,7 +43,7 @@ describe("GET /events", function () {
         }
         expect(res.body)
           .to.be.an("array")
-          .to.deep.includes({ name: "Cometocode" });
+          .to.deep.includes({ name: "Cometocode 2021" });
         return done();
       });
   });

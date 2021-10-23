@@ -21,9 +21,19 @@ app.get("/events", (req, res) => {
 });
 
 app.post("/events", (req, res) => {
-  events.push(req.body); // NOT FOR PRODUCTION
-  res.json(events);
+  // simulate a long request, the server is not blocked
+  setTimeout(() => {
+    events.push(req.body); // NOT FOR PRODUCTION
+    res.json(events);
+  }, 5000);
 });
+
+app.get("/middleware-in-action",
+  	(req, res, next) => {req.loopCount = 1; next();},
+	(req, res, next) => {req.loopCount++; next();},
+	(req, res, next) => {req.loopCount++; next();},
+	(req, res) => {res.json(req.loopCount)}
+)
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
